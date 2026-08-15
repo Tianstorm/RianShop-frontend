@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - KanzToko</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+
+    <div id="loginScreen" class="fixed inset-0 bg-slate-900 flex items-center justify-center p-4">
+        <div class="bg-slate-800 p-8 rounded-xl border border-slate-700 w-full max-w-md">
+            <h2 class="text-2xl font-bold text-center text-indigo-400 mb-6">Login Admin</h2>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm mb-1">Username</label>
+                    <input type="text" id="adminUser" required class="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm mb-1">Password</label>
+                    <input type="password" id="adminPass" required class="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 font-bold py-2 rounded-lg">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="adminDashboard" class="hidden min-h-screen flex flex-col">
+        <header class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex justify-between">
+            <h1 class="text-xl font-bold text-indigo-400">Admin Dashboard</h1>
+            <button onclick="logout()" class="bg-red-600/20 text-red-400 px-4 py-1.5 rounded-lg text-sm">Logout</button>
+        </header>
+
+        <div class="p-6 max-w-7xl mx-auto w-full space-y-8">
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-bold">Manajemen Produk</h3>
+                    <button onclick="openAddModal()" class="bg-indigo-600 px-4 py-2 rounded-lg text-sm font-semibold">+ Tambah Produk</button>
+                </div>
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="bg-slate-900 text-slate-400 text-sm">
+                            <th class="p-3">Nama</th>
+                            <th class="p-3">Harga</th>
+                            <th class="p-3">Stok</th>
+                            <th class="p-3">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody" class="divide-y divide-slate-700 text-sm"></tbody>
+                </table>
+            </div>
+
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 space-y-4">
+                <h3 class="text-lg font-bold">Setting Casaku API</h3>
+                <form onsubmit="saveCasaku(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm mb-1">Merchant ID</label>
+                        <input type="text" id="cfgMerchantId" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1">API Key</label>
+                        <input type="text" id="cfgApiKey" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded">
+                    </div>
+                    <button type="submit" class="bg-emerald-600 px-6 py-2 rounded-lg font-bold md:col-span-2">Simpan Setting</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = "https://nama-backend-anda.vercel.app"; // GANTI DENGAN URL VERCEL BACKEND KAMU
+        let token = localStorage.getItem('adminToken');
+        if (token) loadDashboard();
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const res = await fetch(`${BACKEND_URL}/api/admin/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: document.getElementById('adminUser').value, password: document.getElementById('adminPass').value })
+            });
+            const data = await res.json();
+            if (data.success) {
+                token = data.token;
+                localStorage.setItem('adminToken', token);
+                loadDashboard();
+            } else alert("Login Gagal!");
+        }
+
+        function logout() { localStorage.removeItem('adminToken'); location.reload(); }
+
+        function loadDashboard() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            fetchProducts();
+            fetchCasaku();
+        }
+
+        async function fetchProducts() {
+            const res = await fetch(`${BACKEND_URL}/api/products`);
+            const products = await res.json();
+            const tbody = document.getElementById('productTableBody');
+            tbody.innerHTML = '';
+            products.forEach(p => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="p-3">${p.name}</td>
+                        <td class="p-3">Rp ${p.price.toLocaleString('id-ID')}</td>
+                        <td class="p-3">${p.stock}</td>
+                        <td class="p-3">
+                            <button onclick="deleteProduct(${p.id})" class="text-red-400">Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function deleteProduct(id) {
+            await fetch(`${BACKEND_URL}/api/admin/products/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+            fetchProducts();
+        }
+
+        async function fetchCasaku() {
+            const res = await fetch(`${BACKEND_URL}/api/admin/settings`, { headers: { 'Authorization': `Bearer ${token}` } });
+            const s = await res.json();
+            document.getElementById('cfgMerchantId').value = s.merchant_id || '';
+            document.getElementById('cfgApiKey').value = s.api_key || '';
+        }
+
+        async function saveCasaku(e) {
+            e.preventDefault();
+            await fetch(`${BACKEND_URL}/api/admin/settings`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ merchant_id: document.getElementById('cfgMerchantId').value, api_key: document.getElementById('cfgApiKey').value })
+            });
+            alert("Tersimpan!");
+        }
+    </script>
+</body>
+  </html>
+  
