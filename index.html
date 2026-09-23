@@ -1,143 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - KanzToko</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070514">
+  <title>RianShop — Digital Universe</title>
+  <meta name="description" content="VPS, hosting, aplikasi premium, top up game, pulsa, dan token PLN dengan proses otomatis.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,700;1,800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#070514;--panel:#100d24;--line:#ffffff17;--muted:#aaa4bd;--violet:#8b5cf6;--pink:#ec4899;--cyan:#22d3ee;--text:#f8f7ff;--ok:#34d399}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Manrope,sans-serif;min-height:100vh;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+    .ambient{position:fixed;inset:0;z-index:-3;overflow:hidden;background:radial-gradient(circle at 15% 10%,#3b1971 0,transparent 31%),radial-gradient(circle at 88% 32%,#103c5c 0,transparent 29%),linear-gradient(150deg,#05030d,#0b071b 45%,#050817)}
+    .ambient:before{content:"";position:absolute;inset:-70%;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:64px 64px;transform:perspective(500px) rotateX(58deg) translateY(-10%);animation:grid 18s linear infinite}
+    .orb{position:absolute;border-radius:50%;filter:blur(6px);opacity:.5;animation:drift 16s ease-in-out infinite}.orb.one{width:24rem;height:24rem;background:#7c3aed55;top:8%;left:-10%}.orb.two{width:19rem;height:19rem;background:#0891b255;right:-6%;top:32%;animation-delay:-6s}.noise{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    @keyframes grid{to{transform:perspective(500px) rotateX(58deg) translateY(54px)}}@keyframes drift{50%{transform:translate(70px,50px) scale(1.18)}}@keyframes shimmer{to{background-position:200% center}}@keyframes float{50%{transform:translateY(-10px) rotate(1deg)}}@keyframes pulse{50%{box-shadow:0 0 32px #8b5cf666}}@keyframes marquee{to{transform:translateX(-50%)}}@keyframes reveal{from{opacity:0;transform:translateY(26px)}}
+    .wrap{width:min(1180px,calc(100% - 36px));margin:auto}.glass{background:#0d0a1dcc;border:1px solid var(--line);backdrop-filter:blur(18px);box-shadow:0 24px 80px #0005}
+    nav{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:#070514aa;backdrop-filter:blur(20px)}.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.04em;font-size:1.25rem}.brand-mark{width:39px;height:39px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--violet),var(--pink));box-shadow:0 0 35px #8b5cf655}.brand-mark svg{width:20px}.nav-links{display:flex;gap:28px;color:var(--muted);font-size:.88rem}.nav-links a:hover{color:#fff}.nav-actions{display:flex;gap:9px}.icon-btn,.primary-btn,.secondary-btn{border:1px solid var(--line);color:#fff;border-radius:13px;transition:.25s}.icon-btn{width:43px;height:43px;background:#ffffff09;position:relative}.cart-badge{position:absolute;right:-5px;top:-5px;width:20px;height:20px;display:grid;place-items:center;border-radius:50%;font-size:.65rem;background:var(--pink);border:2px solid var(--bg)}
+    .primary-btn{border:0;padding:13px 20px;font-weight:800;background:linear-gradient(110deg,var(--violet),var(--pink),var(--violet));background-size:200%;box-shadow:0 12px 30px #8b5cf635}.primary-btn:hover{transform:translateY(-2px);background-position:100%}.secondary-btn{padding:12px 18px;background:#ffffff09}.secondary-btn:hover{background:#ffffff12}
+    .hero{padding:94px 0 70px;text-align:center;position:relative}.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 13px;border-radius:99px;color:#d8b4fe;background:#a855f716;border:1px solid #c084fc30;font:500 .7rem DM Mono;text-transform:uppercase;letter-spacing:.14em}.eyebrow i{width:7px;height:7px;background:var(--ok);border-radius:50%;box-shadow:0 0 12px var(--ok)}
+    h1{font-size:clamp(3.1rem,8vw,7rem);line-height:.92;letter-spacing:-.075em;margin:27px auto 25px;max-width:970px}.hero-serif{display:block;font-family:"Playfair Display",serif;font-style:italic;font-weight:800;letter-spacing:-.045em;background:linear-gradient(100deg,#fff 20%,#c4b5fd 38%,#f9a8d4 56%,#67e8f9 74%,#fff 90%);background-size:200%;-webkit-background-clip:text;color:transparent;animation:shimmer 7s linear infinite}.hero p{max-width:650px;margin:0 auto;color:var(--muted);font-size:1.02rem;line-height:1.8}.hero-actions{display:flex;justify-content:center;gap:12px;margin-top:32px}.trust{display:flex;justify-content:center;gap:35px;margin-top:42px;color:#918aa6;font-size:.76rem}.trust span{display:flex;align-items:center;gap:8px}.trust b{color:#e9d5ff}
+    .floating-card{position:absolute;padding:12px 15px;border-radius:15px;font:500 .7rem DM Mono;color:#ddd6fe;animation:float 5s ease-in-out infinite}.floating-card.left{left:3%;top:36%;transform:rotate(-7deg)}.floating-card.right{right:3%;top:28%;animation-delay:-2s;transform:rotate(8deg)}
+    .marquee{overflow:hidden;border-block:1px solid var(--line);background:#ffffff04;transform:rotate(-1deg);width:102%;margin-left:-1%;padding:14px 0}.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite}.marquee span{font:500 .68rem DM Mono;letter-spacing:.16em;text-transform:uppercase;color:#a8a1ba;white-space:nowrap}.marquee b{color:#d8b4fe;margin:0 28px}
+    section{padding:86px 0}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px}.kicker{font:500 .68rem DM Mono;color:#c4b5fd;text-transform:uppercase;letter-spacing:.18em}.section-head h2{font-size:clamp(2rem,4vw,3.5rem);letter-spacing:-.055em;line-height:1;margin:10px 0 0}.section-head p{color:var(--muted);max-width:440px;font-size:.88rem;line-height:1.7}
+    .filters{display:flex;gap:8px;overflow:auto;padding-bottom:12px;margin-bottom:16px;scrollbar-width:none}.filter{white-space:nowrap;padding:9px 14px;border:1px solid var(--line);background:#ffffff05;color:#aca6bb;border-radius:99px;font-size:.76rem}.filter.active{background:#8b5cf622;color:#e9d5ff;border-color:#a78bfa66}
+    .products{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.product{position:relative;border-radius:23px;padding:13px;overflow:hidden;transition:.35s;animation:reveal .7s both}.product:hover{transform:translateY(-7px);border-color:#a78bfa55;box-shadow:0 30px 70px #0008}.product-media{height:190px;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(135deg,#211747,#111b37);display:grid;place-items:center}.product-media img{width:100%;height:100%;object-fit:cover;transition:.5s}.product:hover img{transform:scale(1.06)}.product-icon{font-size:3rem;filter:drop-shadow(0 0 22px #a78bfa)}.category{position:absolute;top:10px;left:10px;padding:6px 9px;border-radius:99px;background:#090615ba;border:1px solid #ffffff20;backdrop-filter:blur(10px);font:500 .61rem DM Mono;text-transform:uppercase;letter-spacing:.08em}.stock{position:absolute;right:10px;top:10px;font:500 .61rem DM Mono;padding:6px 8px;border-radius:99px;background:#052e2baa;color:#6ee7b7}.product-body{padding:17px 7px 7px}.product h3{font-size:1.03rem;margin:0 0 7px;letter-spacing:-.025em}.product-desc{color:#90899f;font-size:.77rem;line-height:1.55;height:2.4em;overflow:hidden}.product-foot{display:flex;align-items:center;justify-content:space-between;margin-top:17px}.price{font-size:1.12rem;font-weight:800;letter-spacing:-.03em}.add{border:1px solid #ffffff1c;width:39px;height:39px;border-radius:12px;color:#fff;background:linear-gradient(135deg,#8b5cf633,#ec489933);font-size:1.2rem}.add:hover{animation:pulse 1.5s infinite}.skeleton{height:330px;border-radius:23px;background:linear-gradient(90deg,#ffffff05,#ffffff0d,#ffffff05);background-size:200%;animation:shimmer 1.4s infinite}
+    .features{display:grid;grid-template-columns:1.3fr .7fr .7fr;gap:16px}.feature{border-radius:24px;padding:28px;min-height:210px;position:relative;overflow:hidden}.feature h3{font-size:1.35rem;margin:18px 0 8px;letter-spacing:-.04em}.feature p{font-size:.8rem;line-height:1.65;color:var(--muted);max-width:340px}.feature .symbol{font-size:1.55rem}.feature:first-child:after{content:"AUTOMATIC";position:absolute;right:-10px;bottom:-23px;font-size:4.5rem;font-weight:800;color:#ffffff05;letter-spacing:-.06em}
+    footer{border-top:1px solid var(--line);padding:35px 0;color:#817a91;font-size:.75rem}.footer-inner{display:flex;justify-content:space-between;align-items:center}
+    .overlay{position:fixed;inset:0;z-index:50;background:#03020ac7;backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}.overlay.open{display:flex}.modal{width:min(620px,100%);max-height:92vh;overflow:auto;border-radius:25px;padding:25px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:23px}.modal-head h2{margin:0;font-size:1.35rem}.close{border:1px solid var(--line);background:#ffffff08;color:#fff;border-radius:10px;width:36px;height:36px;font-size:1.2rem}.cart-list{display:grid;gap:10px}.cart-item{display:flex;justify-content:space-between;gap:15px;padding:13px;border-radius:14px;background:#ffffff07;border:1px solid #ffffff0c}.cart-item small{display:block;color:var(--muted);margin-top:3px}.remove{border:0;background:none;color:#fda4af}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:17px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:.69rem;color:#aaa3b8;font-weight:700;text-transform:uppercase;letter-spacing:.08em}.field input{width:100%;border:1px solid var(--line);background:#06040f;color:#fff;border-radius:12px;padding:13px;outline:none}.field input:focus{border-color:#a78bfa99;box-shadow:0 0 0 3px #8b5cf61c}.item-fields{grid-column:1/-1;border-top:1px solid var(--line);padding-top:13px}.item-fields h4{margin:0 0 12px;font-size:.8rem;color:#ddd6fe}.total{display:flex;justify-content:space-between;font-weight:800;font-size:1.25rem;margin:22px 0}.pay{width:100%;padding:15px}.empty{text-align:center;padding:38px;color:var(--muted)}
+    .payment{text-align:center}.qr{width:210px;height:210px;border-radius:16px;background:white;padding:10px;margin:15px auto;object-fit:contain}.payment-id{font:500 .68rem DM Mono;color:#9b95aa;word-break:break-all}.status-ring{width:75px;height:75px;border-radius:50%;display:grid;place-items:center;margin:15px auto;background:#8b5cf620;border:1px solid #a78bfa55;font-size:1.8rem}.notice{border:1px solid #f59e0b33;background:#f59e0b0b;color:#fcd34d;padding:11px;border-radius:11px;font-size:.73rem;margin-top:12px}.toast{position:fixed;right:20px;bottom:20px;z-index:100;padding:13px 17px;border-radius:13px;background:#18132d;border:1px solid var(--line);box-shadow:0 20px 50px #0008;transform:translateY(100px);opacity:0;transition:.3s}.toast.show{transform:none;opacity:1}
+    @media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:1fr 1fr}.features .feature:first-child{grid-column:1/-1}.floating-card{display:none}.nav-links{display:none}}
+    @media(max-width:600px){.wrap{width:min(100% - 24px,1180px)}.hero{padding-top:70px}h1{font-size:3.5rem}.hero-actions,.trust{flex-direction:column;align-items:center}.trust{gap:12px}.products,.features{grid-template-columns:1fr}.features .feature:first-child{grid-column:auto}.product-media{height:210px}.section-head{display:block}.section-head p{margin-top:14px}.form-grid{grid-template-columns:1fr}.field.full,.item-fields{grid-column:auto}.footer-inner{display:block;text-align:center}.footer-inner .brand{justify-content:center;margin-bottom:14px}}
+    @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+  </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen">
+<body>
+  <div class="ambient"><div class="orb one"></div><div class="orb two"></div></div><div class="noise"></div>
+  <nav><div class="wrap nav-inner">
+    <a class="brand" href="#"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m13 2-9 12h8l-1 8 9-12h-8z"/></svg></span>RianShop</a>
+    <div class="nav-links"><a href="#catalog">Katalog</a><a href="#why">Keunggulan</a><a href="admin.html">Admin</a></div>
+    <div class="nav-actions"><button class="icon-btn" onclick="openCart()" aria-label="Keranjang">◈<span class="cart-badge" id="cartCount">0</span></button></div>
+  </div></nav>
 
-    <div id="loginScreen" class="fixed inset-0 bg-slate-900 flex items-center justify-center p-4">
-        <div class="bg-slate-800 p-8 rounded-xl border border-slate-700 w-full max-w-md">
-            <h2 class="text-2xl font-bold text-center text-indigo-400 mb-6">Login Admin</h2>
-            <form onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-sm mb-1">Username</label>
-                    <input type="text" id="adminUser" required class="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg">
-                </div>
-                <div>
-                    <label class="block text-sm mb-1">Password</label>
-                    <input type="password" id="adminPass" required class="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg">
-                </div>
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 font-bold py-2 rounded-lg">Login</button>
-            </form>
-        </div>
-    </div>
+  <header class="hero wrap">
+    <div class="floating-card left glass">PAYMENT / QRIS ✓</div><div class="floating-card right glass">FULFILLMENT / AUTO</div>
+    <span class="eyebrow"><i></i> digital goods, delivered instantly</span>
+    <h1>Semua kebutuhan digital.<span class="hero-serif">Dalam satu semesta.</span></h1>
+    <p>VPS berkinerja tinggi, hosting, aplikasi premium, top up game, pulsa, dan token PLN. Pembayaran QRIS, pengiriman otomatis ke WhatsApp.</p>
+    <div class="hero-actions"><a class="primary-btn" href="#catalog">Jelajahi katalog</a><button class="secondary-btn" onclick="trackPrompt()">Lacak pesanan</button></div>
+    <div class="trust"><span><b>01</b> Pembayaran terenkripsi</span><span><b>02</b> Fulfillment otomatis</span><span><b>03</b> Struk WhatsApp</span></div>
+  </header>
 
-    <div id="adminDashboard" class="hidden min-h-screen flex flex-col">
-        <header class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex justify-between">
-            <h1 class="text-xl font-bold text-indigo-400">Admin Dashboard</h1>
-            <button onclick="logout()" class="bg-red-600/20 text-red-400 px-4 py-1.5 rounded-lg text-sm">Logout</button>
-        </header>
+  <div class="marquee"><div class="marquee-track"><span>VPS NVME <b>✦</b> HOSTING PREMIUM <b>✦</b> MOBILE LEGENDS <b>✦</b> FREE FIRE <b>✦</b> PUBG MOBILE <b>✦</b> ROBLOX <b>✦</b> PULSA <b>✦</b> TOKEN PLN <b>✦</b> VPS NVME <b>✦</b> HOSTING PREMIUM <b>✦</b> MOBILE LEGENDS <b>✦</b> FREE FIRE <b>✦</b> PUBG MOBILE <b>✦</b> ROBLOX <b>✦</b> PULSA <b>✦</b> TOKEN PLN <b>✦</b></span></div></div>
 
-        <div class="p-6 max-w-7xl mx-auto w-full space-y-8">
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 space-y-4">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-lg font-bold">Manajemen Produk</h3>
-                    <button onclick="openAddModal()" class="bg-indigo-600 px-4 py-2 rounded-lg text-sm font-semibold">+ Tambah Produk</button>
-                </div>
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="bg-slate-900 text-slate-400 text-sm">
-                            <th class="p-3">Nama</th>
-                            <th class="p-3">Harga</th>
-                            <th class="p-3">Stok</th>
-                            <th class="p-3">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="productTableBody" class="divide-y divide-slate-700 text-sm"></tbody>
-                </table>
-            </div>
+  <main>
+    <section id="catalog"><div class="wrap">
+      <div class="section-head"><div><div class="kicker">Curated digital catalog</div><h2>Pilih layananmu.</h2></div><p>Produk digital terpilih dengan harga transparan dan pengiriman yang berjalan otomatis setelah pembayaran terverifikasi.</p></div>
+      <div class="filters" id="filters"><button class="filter active" data-category="Semua">Semua produk</button></div>
+      <div class="products" id="products"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+    </div></section>
+    <section id="why"><div class="wrap">
+      <div class="section-head"><div><div class="kicker">Built differently</div><h2>Cepat. Aman. Otomatis.</h2></div></div>
+      <div class="features">
+        <article class="feature glass"><span class="symbol">⚡</span><h3>Dikirim tanpa menunggu.</h3><p>Sistem membaca pembayaran, menjalankan fulfillment, lalu mengirim detail produk dan struk langsung ke WhatsApp.</p></article>
+        <article class="feature glass"><span class="symbol">◇</span><h3>QRIS Ripay</h3><p>Satu QR untuk membayar dari aplikasi bank dan dompet digital favorit.</p></article>
+        <article class="feature glass"><span class="symbol">✦</span><h3>Selalu terlacak</h3><p>Status pembayaran dan pengiriman dapat dilihat kapan saja dengan ID pesanan.</p></article>
+      </div>
+    </div></section>
+  </main>
 
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 space-y-4">
-                <h3 class="text-lg font-bold">Setting Casaku API</h3>
-                <form onsubmit="saveCasaku(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm mb-1">Merchant ID</label>
-                        <input type="text" id="cfgMerchantId" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded">
-                    </div>
-                    <div>
-                        <label class="block text-sm mb-1">API Key</label>
-                        <input type="text" id="cfgApiKey" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded">
-                    </div>
-                    <button type="submit" class="bg-emerald-600 px-6 py-2 rounded-lg font-bold md:col-span-2">Simpan Setting</button>
-                </form>
-            </div>
-        </div>
-    </div>
+  <footer><div class="wrap footer-inner"><div class="brand"><span class="brand-mark">R</span>RianShop</div><span>© 2026 · Digital goods for everyone.</span></div></footer>
 
-    <script>
-        const BACKEND_URL = "https://nama-backend-anda.vercel.app"; // GANTI DENGAN URL VERCEL BACKEND KAMU
-        let token = localStorage.getItem('adminToken');
-        if (token) loadDashboard();
+  <div class="overlay" id="cartOverlay"><div class="modal glass">
+    <div class="modal-head"><h2>Checkout digital</h2><button class="close" onclick="closeOverlay('cartOverlay')">×</button></div>
+    <div id="cartContent"></div>
+  </div></div>
+  <div class="overlay" id="paymentOverlay"><div class="modal glass payment">
+    <div class="modal-head"><h2>Status pesanan</h2><button class="close" onclick="closeOverlay('paymentOverlay')">×</button></div>
+    <div id="paymentContent"></div>
+  </div></div>
+  <div class="toast" id="toast"></div>
 
-        async function handleLogin(e) {
-            e.preventDefault();
-            const res = await fetch(`${BACKEND_URL}/api/admin/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: document.getElementById('adminUser').value, password: document.getElementById('adminPass').value })
-            });
-            const data = await res.json();
-            if (data.success) {
-                token = data.token;
-                localStorage.setItem('adminToken', token);
-                loadDashboard();
-            } else alert("Login Gagal!");
-        }
-
-        function logout() { localStorage.removeItem('adminToken'); location.reload(); }
-
-        function loadDashboard() {
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('adminDashboard').classList.remove('hidden');
-            fetchProducts();
-            fetchCasaku();
-        }
-
-        async function fetchProducts() {
-            const res = await fetch(`${BACKEND_URL}/api/products`);
-            const products = await res.json();
-            const tbody = document.getElementById('productTableBody');
-            tbody.innerHTML = '';
-            products.forEach(p => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td class="p-3">${p.name}</td>
-                        <td class="p-3">Rp ${p.price.toLocaleString('id-ID')}</td>
-                        <td class="p-3">${p.stock}</td>
-                        <td class="p-3">
-                            <button onclick="deleteProduct(${p.id})" class="text-red-400">Hapus</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function deleteProduct(id) {
-            await fetch(`${BACKEND_URL}/api/admin/products/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
-            fetchProducts();
-        }
-
-        async function fetchCasaku() {
-            const res = await fetch(`${BACKEND_URL}/api/admin/settings`, { headers: { 'Authorization': `Bearer ${token}` } });
-            const s = await res.json();
-            document.getElementById('cfgMerchantId').value = s.merchant_id || '';
-            document.getElementById('cfgApiKey').value = s.api_key || '';
-        }
-
-        async function saveCasaku(e) {
-            e.preventDefault();
-            await fetch(`${BACKEND_URL}/api/admin/settings`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                body: JSON.stringify({ merchant_id: document.getElementById('cfgMerchantId').value, api_key: document.getElementById('cfgApiKey').value })
-            });
-            alert("Tersimpan!");
-        }
-    </script>
+  <script>
+    const API_URL=(window.RIANSHOP_API_URL||localStorage.getItem("rianshop_api_url")||"https://web-store-nu-lime.vercel.app").replace(/\/$/,"");
+    const state={products:[],category:"Semua",cart:JSON.parse(localStorage.getItem("rianshop_cart")||"[]"),poll:null};
+    const money=value=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(value);
+    const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
+    const iconFor=category=>({VPS:"☁",Hosting:"⌁","Top Up Game":"♜",Pulsa:"◉","Token Listrik":"ϟ","Aplikasi Premium":"✦"}[category]||"✦");
+    function toast(message){const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600)}
+    async function api(path,options={}){const response=await fetch(`${API_URL}${path}`,options);const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||"Layanan sedang bermasalah");return data}
+    async function loadProducts(){try{state.products=(await api("/api/products")).products;renderFilters();renderProducts()}catch(error){document.getElementById("products").innerHTML=`<div class="empty glass">Katalog belum dapat dimuat.<br><small>${escapeHtml(error.message)}</small></div>`}}
+    function renderFilters(){const categories=["Semua",...new Set(state.products.map(p=>p.category))];document.getElementById("filters").innerHTML=categories.map(c=>`<button class="filter ${c===state.category?"active":""}" onclick="setCategory(decodeURIComponent('${encodeURIComponent(c)}'))">${escapeHtml(c)}</button>`).join("")}
+    function setCategory(category){state.category=category;renderFilters();renderProducts()}
+    function renderProducts(){const items=state.category==="Semua"?state.products:state.products.filter(p=>p.category===state.category);document.getElementById("products").innerHTML=items.length?items.map((p,index)=>`<article class="product glass" style="animation-delay:${index*.06}s">
+      <div class="product-media">${p.image_url?`<img src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.name)}" loading="lazy">`:`<span class="product-icon">${iconFor(p.category)}</span>`}<span class="category">${escapeHtml(p.category)}</span><span class="stock">${p.stock>0?`${p.stock>999?"ready":p.stock+" ready"}`:"habis"}</span></div>
+      <div class="product-body"><h3>${escapeHtml(p.name)}</h3><div class="product-desc">${escapeHtml(p.description)}</div><div class="product-foot"><span class="price">${money(p.price)}</span><button class="add" ${p.stock<1?"disabled":""} onclick="addCart(${p.id})" aria-label="Tambah">+</button></div></div>
+    </article>`).join(""):`<div class="empty">Tidak ada produk pada kategori ini.</div>`}
+    function addCart(id){if(!state.cart.includes(id))state.cart.push(id);saveCart();toast("Produk ditambahkan ke checkout")}
+    function removeCart(id){state.cart=state.cart.filter(item=>item!==id);saveCart();renderCart()}
+    function saveCart(){localStorage.setItem("rianshop_cart",JSON.stringify(state.cart));document.getElementById("cartCount").textContent=state.cart.length}
+    function openCart(){document.getElementById("cartOverlay").classList.add("open");renderCart()}
+    function closeOverlay(id){document.getElementById(id).classList.remove("open")}
+    function renderCart(){const products=state.cart.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);const content=document.getElementById("cartContent");if(!products.length){content.innerHTML=`<div class="empty">Keranjangmu masih kosong.<br><button class="secondary-btn" style="margin-top:16px" onclick="closeOverlay('cartOverlay')">Lihat katalog</button></div>`;return}
+      const fields=products.map(product=>(product.customer_fields||[]).map(field=>`<div class="field"><label>${escapeHtml(product.name)} · ${escapeHtml(field.label||field.name)}</label><input name="item_${product.id}_${escapeHtml(field.name)}" placeholder="${escapeHtml(field.placeholder||"")}" ${field.required?"required":""} inputmode="${field.type==="tel"?"numeric":"text"}"></div>`).join("")).join("");
+      content.innerHTML=`<form id="checkoutForm" onsubmit="checkout(event)"><div class="cart-list">${products.map(p=>`<div class="cart-item"><div><strong>${escapeHtml(p.name)}</strong><small>${escapeHtml(p.category)} · ${money(p.price)}</small></div><button type="button" class="remove" onclick="removeCart(${p.id})">Hapus</button></div>`).join("")}</div>
+      <div class="form-grid"><div class="field"><label>Nama lengkap</label><input name="customer_name" required autocomplete="name"></div><div class="field"><label>Nomor WhatsApp</label><input name="customer_phone" required inputmode="tel" placeholder="0812..."></div><div class="field full"><label>Email (opsional)</label><input name="customer_email" type="email" autocomplete="email"></div>${fields?`<div class="item-fields"><h4>Data tujuan produk</h4><div class="form-grid">${fields}</div></div>`:""}</div>
+      <div class="total"><span>Total</span><span>${money(products.reduce((sum,p)=>sum+p.price,0))}</span></div><button class="primary-btn pay" id="checkoutBtn">Buat pembayaran QRIS</button><div class="notice">Pastikan nomor WhatsApp aktif. Detail produk dan struk dikirim otomatis setelah pembayaran berhasil.</div></form>`}
+    async function checkout(event){event.preventDefault();const button=document.getElementById("checkoutBtn");button.disabled=true;button.textContent="Membuat pembayaran...";const form=new FormData(event.target);const products=state.cart.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);const items=products.map(product=>{const customer_data={};for(const field of product.customer_fields||[])customer_data[field.name]=form.get(`item_${product.id}_${field.name}`)||"";return{product_id:product.id,quantity:1,customer_data}});
+      try{const data=await api("/api/orders",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({customer_name:form.get("customer_name"),customer_phone:form.get("customer_phone"),customer_email:form.get("customer_email"),items})});state.cart=[];saveCart();closeOverlay("cartOverlay");showPayment(data.order);history.replaceState(null,"",`?order=${encodeURIComponent(data.order.public_id)}`)}
+      catch(error){toast(error.message);button.disabled=false;button.textContent="Buat pembayaran QRIS"}}
+    function showPayment(order){document.getElementById("paymentOverlay").classList.add("open");const complete=order.status==="completed";const failed=["failed","expired"].includes(order.status);document.getElementById("paymentContent").innerHTML=`<div class="status-ring">${complete?"✓":failed?"!":"◌"}</div><h3>${complete?"Pesanan selesai":failed?"Pembayaran gagal / kedaluwarsa":"Menunggu pembayaran"}</h3><div class="payment-id">${escapeHtml(order.public_id)}</div>${order.qr_image_url&&!complete&&!failed?`<img class="qr" src="${escapeHtml(order.qr_image_url)}" alt="QRIS">`:""}<p style="color:var(--muted);font-size:.82rem;line-height:1.6">${complete?"Produk dan struk telah diproses. Periksa WhatsApp tujuan.":failed?escapeHtml(order.failure_reason||"Silakan buat pesanan baru."):"Selesaikan pembayaran. Halaman ini memperbarui status secara otomatis."}</p>${order.payment_url&&!complete&&!failed?`<a class="primary-btn" style="display:inline-block;margin-top:8px" href="${escapeHtml(order.payment_url)}" target="_blank" rel="noopener">Buka halaman pembayaran</a>`:""}${order.items?.some(i=>i.fulfillment&&Object.keys(i.fulfillment).length)?`<div class="cart-list" style="text-align:left;margin-top:20px">${order.items.map(i=>`<div class="cart-item"><div><strong>${escapeHtml(i.product_name)}</strong><small>${escapeHtml(i.status)}</small></div></div>`).join("")}</div>`:""}`;
+      clearInterval(state.poll);if(!complete&&!failed)state.poll=setInterval(()=>trackOrder(order.public_id,true),4000)}
+    async function trackOrder(id,silent=false){try{const data=await api(`/api/orders/${encodeURIComponent(id)}`);showPayment(data.order)}catch(error){if(!silent)toast(error.message)}}
+    function trackPrompt(){const id=prompt("Masukkan ID pesanan RianShop");if(id)trackOrder(id.trim())}
+    saveCart();loadProducts();const existingOrder=new URLSearchParams(location.search).get("order");if(existingOrder)trackOrder(existingOrder,true);
+  </script>
 </body>
-  </html>
-  
+</html>
